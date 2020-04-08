@@ -1,43 +1,56 @@
 package com.upgrad.quora.service.entity;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
+import javax.validation.constraints.Size;
 import java.time.ZonedDateTime;
 
 @Entity
-@Table(name = "user_auth", schema = "quora")
+@Table(name = "user_auth")
 @NamedQueries({
-        @NamedQuery(name = "userAuthTokenByAccessToken" , query = "select ut from UserAuthTokenEntity ut where ut.access_token = :access_token ")
+        @NamedQuery(
+                name = "userAuthByAccessToken",
+                query = "select u from UserAuthTokenEntity u where u.accessToken=:accessToken")
 })
-public class UserAuthTokenEntity implements Serializable {
-
+public class UserAuthTokenEntity {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "UUID")
+    @Column(name = "uuid")
+    @NotNull
+    @Size(max = 200)
     private String uuid;
 
     @ManyToOne
-    @JoinColumn(name = "USER_ID")
-    private UserEntity user;
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "user_id")
+    private UserEntity userEntity;
 
-    @Column(name = "ACCESS_TOKEN")
+    @Column(name = "access_token")
     @NotNull
-    private String access_token;
+    @Size(max = 500)
+    private String accessToken;
 
-    @Column(name = "EXPIRES_AT")
+    @Column(name = "expires_at")
     @NotNull
     private ZonedDateTime expiresAt;
 
-    @Column(name = "LOGIN_AT")
-    private ZonedDateTime login_at;
+    @Column(name = "login_at")
+    @NotNull
+    private ZonedDateTime loginAt;
 
-    @Column(name = "LOGOUT_AT")
-    private ZonedDateTime logout_at;
+    @Column(name = "logout_at")
+    private ZonedDateTime logoutAt;
 
     public Integer getId() {
         return id;
@@ -55,13 +68,20 @@ public class UserAuthTokenEntity implements Serializable {
         this.uuid = uuid;
     }
 
-
-    public String getAccess_token() {
-        return access_token;
+    public UserEntity getUserEntity() {
+        return userEntity;
     }
 
-    public void setAccess_token(String access_token) {
-        this.access_token = access_token;
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
     public ZonedDateTime getExpiresAt() {
@@ -72,28 +92,34 @@ public class UserAuthTokenEntity implements Serializable {
         this.expiresAt = expiresAt;
     }
 
-    public ZonedDateTime getLogin_at() {
-        return login_at;
+    public ZonedDateTime getLoginAt() {
+        return loginAt;
     }
 
-    public void setLogin_at(ZonedDateTime login_at) {
-        this.login_at = login_at;
+    public void setLoginAt(ZonedDateTime loginAt) {
+        this.loginAt = loginAt;
     }
 
-    public ZonedDateTime getLogout_at() {
-        return logout_at;
+    public ZonedDateTime getLogoutAt() {
+        return logoutAt;
     }
 
-    public void setLogout_at(ZonedDateTime logout_at) {
-        this.logout_at = logout_at;
+    public void setLogoutAt(ZonedDateTime logoutAt) {
+        this.logoutAt = logoutAt;
     }
 
-    public UserEntity getUser() {
-        return user;
+    @Override
+    public boolean equals(Object obj) {
+        return new EqualsBuilder().append(this, obj).isEquals();
     }
 
-    public void setUser(UserEntity user) {
-        this.user = user;
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(this).hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
 }
-
