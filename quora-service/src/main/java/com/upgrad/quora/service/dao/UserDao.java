@@ -29,4 +29,13 @@ public class UserDao {
             return null;
         }
     }
+
+    public String deleteUserByUserId(String userId) {
+        UserEntity user = getUserByUserId(userId);
+        if (null != user) {
+            entityManager.remove(user);
+            return user.getUuid();
+        }
+        return null;
+    }
 }
