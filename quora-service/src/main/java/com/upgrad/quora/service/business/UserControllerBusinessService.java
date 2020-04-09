@@ -19,8 +19,10 @@ import java.util.UUID;
 public class UserControllerBusinessService {
     @Autowired
     private UserDao userDao;
+
     @Autowired
     private UserAuthTokenDao userAuthTokenDao;
+
     @Autowired
     private PasswordCryptographyProvider cryptographyProvider;
 
@@ -81,16 +83,6 @@ public class UserControllerBusinessService {
         userAuthEntity.setLogoutAt(ZonedDateTime.now());
         userAuthTokenDao.updateUserAuth(userAuthEntity);
         return userAuthEntity.getUserEntity();
-    }
-
-    // checks whether the username exist in the database
-    private boolean isUserNameInUse(final String userName) {
-        return userDao.getUserByUserName(userName) != null;
-    }
-
-    // checks whether the email exist in the database
-    private boolean isEmailInUse(final String email) {
-        return userDao.getUserByEmail(email) != null;
     }
 
 }
