@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e0e1a1ac-0de6-4cd4-8417-d2636de2d6a4" name="Default Changelist" comment="" />
+    <list default="true" id="e0e1a1ac-0de6-4cd4-8417-d2636de2d6a4" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,10 +35,15 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Global Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
+  </component>
+  <component name="RecentsManager">
+    <key name="OPEN_URL_DIALOG">
+      <recent name="https://github.com/psusmit/quora/tree/REST-API-endpoints---1" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="QuoraApiApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
@@ -71,7 +78,10 @@
       <workItem from="1586366221272" duration="632000" />
       <workItem from="1586367398908" duration="4811000" />
       <workItem from="1586372747887" duration="5216000" />
-      <workItem from="1586378692491" duration="1165000" />
+      <workItem from="1586378692491" duration="1770000" />
+      <workItem from="1586406009513" duration="949000" />
+      <workItem from="1586407007012" duration="76000" />
+      <workItem from="1586410343659" duration="643000" />
     </task>
     <servers />
   </component>
@@ -87,10 +97,14 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="484" y="233" width="409" height="266" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1366.728@0.0.1366.728" timestamp="1586378835300" />
-    <state x="463" y="122" key="FileChooserDialogImpl" timestamp="1586373910455">
+    <state x="92" y="92" width="1182" height="544" key="DiffContextDialog" timestamp="1586410990271">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="463" y="122" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1586373910455" />
+    <state x="92" y="92" width="1182" height="544" key="DiffContextDialog/0.0.1366.728@0.0.1366.728" timestamp="1586410990271" />
+    <state x="463" y="122" key="FileChooserDialogImpl" timestamp="1586406673829">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="463" y="122" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1586406673829" />
     <state width="980" height="210" key="GridCell.Tab.0.bottom" timestamp="1586379861058">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -123,10 +137,26 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state width="980" height="210" key="GridCell.Tab.1.right/0.0.1366.728@0.0.1366.728" timestamp="1586379861058" />
-    <state x="186" y="0" key="SettingsEditor" timestamp="1586370670688">
+    <state x="186" y="0" key="SettingsEditor" timestamp="1586406680061">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="186" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1586370670688" />
+    <state x="186" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1586406680061" />
+    <state x="275" y="100" key="Vcs.Push.Dialog.v2" timestamp="1586410430208">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="275" y="100" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1586410430208" />
+    <state x="92" y="92" width="1182" height="544" key="com.intellij.dvcs.ui.CompareBranchesDialog" timestamp="1586406983664">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="92" y="92" width="1182" height="544" key="com.intellij.dvcs.ui.CompareBranchesDialog/0.0.1366.728@0.0.1366.728" timestamp="1586406983664" />
+    <state x="391" y="191" key="com.intellij.ide.util.TipDialog" timestamp="1586407078010">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="391" y="191" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1586407078010" />
+    <state x="489" y="167" key="git4idea.merge.GitMergeDialog" timestamp="1586406748228">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="489" y="167" key="git4idea.merge.GitMergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1586406748228" />
     <state x="339" y="162" key="run.anything.popup" timestamp="1586370420467">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
