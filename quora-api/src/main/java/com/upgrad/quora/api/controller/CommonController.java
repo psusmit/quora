@@ -19,7 +19,19 @@ public class CommonController {
     @GetMapping(path = "/{userId}")
     public ResponseEntity<UserDetailsResponse> getUserById(@PathVariable("userId") String userId, @RequestHeader("authorization") final String authorization) throws AuthorizationFailedException, UserNotFoundException {
         UserEntity userEntity = userBusinessService.getUserById(userId, authorization);
-        UserDetailsResponse userDetailsResponse = new UserDetailsResponse().userName(userEntity.getUuid()).aboutMe(userEntity.getAboutme()).contactNumber(userEntity.getContactnumber()).country(userEntity.getCountry()).dob(userEntity.getDob()).emailAddress(userEntity.getEmail()).userName(userEntity.getUsername()).firstName(userEntity.getFirstName()).lastName(userEntity.getLastName());
+        UserDetailsResponse userDetailsResponse = new UserDetailsResponse()
+                .userName(userEntity.getUuid())
+                //.aboutMe(userEntity.getAboutme())
+                .aboutMe(userEntity.getAboutMe())
+                //.contactNumber(userEntity.getContactnumber())
+                .contactNumber(userEntity.getContactNumber())
+                .country(userEntity.getCountry())
+                .dob(userEntity.getDob())
+                .emailAddress(userEntity
+                        .getEmail())
+           //     .userName(userEntity.getUsername())
+                .userName(userEntity.getUserName())
+                .firstName(userEntity.getFirstName()).lastName(userEntity.getLastName());
         return new ResponseEntity<>(userDetailsResponse, HttpStatus.OK);
     }
 }

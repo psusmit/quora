@@ -4,54 +4,66 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "user_auth")
 @NamedQueries({
+        @NamedQuery(
+                name = "userAuthByAccessToken",
+                query = "select u from UserAuthTokenEntity u where u.accessToken=:accessToken"),
         @NamedQuery(name = "userAuthTokenByAccessToken", query = "select ut from UserAuthTokenEntity ut where ut.accessToken =:accessToken")
+
 })
-public class UserAuthTokenEntity implements Serializable {
+public class UserAuthTokenEntity {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Integer id;
 
+    @Column(name = "uuid")
     @NotNull
-    @Column(name = "UUID")
+    @Size(max = 200)
     private String uuid;
 
     @ManyToOne
-    @JoinColumn(name = "USER_ID")
-    private UserEntity user;
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "user_id")
+    private UserEntity userEntity;
 
-    @Column(name = "ACCESS_TOKEN")
+    @Column(name = "access_token")
     @NotNull
     @Size(max = 500)
     private String accessToken;
 
-    @Column(name = "LOGIN_AT")
-    @NotNull
-    private ZonedDateTime loginAt;
-
-    @Column(name = "EXPIRES_AT")
+    @Column(name = "expires_at")
     @NotNull
     private ZonedDateTime expiresAt;
 
-    @Column(name = "LOGOUT_AT")
+    @Column(name = "login_at")
+    @NotNull
+    private ZonedDateTime loginAt;
+
+    @Column(name = "logout_at")
     private ZonedDateTime logoutAt;
 
-    public long getId() {
+    public UserEntity getUser() {
+        return userEntity;
+    }
+
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -63,12 +75,12 @@ public class UserAuthTokenEntity implements Serializable {
         this.uuid = uuid;
     }
 
-    public UserEntity getUser() {
-        return user;
+    public UserEntity getUserEntity() {
+        return userEntity;
     }
 
-    public void setUser(UserEntity user) {
-        this.user = user;
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
     }
 
     public String getAccessToken() {
@@ -79,20 +91,20 @@ public class UserAuthTokenEntity implements Serializable {
         this.accessToken = accessToken;
     }
 
-    public ZonedDateTime getLoginAt() {
-        return loginAt;
-    }
-
-    public void setLoginAt(ZonedDateTime loginAt) {
-        this.loginAt = loginAt;
-    }
-
     public ZonedDateTime getExpiresAt() {
         return expiresAt;
     }
 
     public void setExpiresAt(ZonedDateTime expiresAt) {
         this.expiresAt = expiresAt;
+    }
+
+    public ZonedDateTime getLoginAt() {
+        return loginAt;
+    }
+
+    public void setLoginAt(ZonedDateTime loginAt) {
+        this.loginAt = loginAt;
     }
 
     public ZonedDateTime getLogoutAt() {
@@ -103,4 +115,18 @@ public class UserAuthTokenEntity implements Serializable {
         this.logoutAt = logoutAt;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return new EqualsBuilder().append(this, obj).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(this).hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    }
 }
