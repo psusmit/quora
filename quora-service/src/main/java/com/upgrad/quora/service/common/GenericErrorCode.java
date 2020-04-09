@@ -14,7 +14,9 @@ public enum GenericErrorCode implements ErrorCode {
     ATHR_001("ATHR-001", "User has not signed in"),
     ATHR_002("ATHR-002", "User is signed out.Sign in first to get user details"),
     ATHR_003("ATHR-003", "Unauthorized Access, Entered user is not an admin"),
-    USR_001("USR-001", "User with entered uuid does not exist");
+    USR_001("USR-001", "User with entered uuid does not exist"),
+    QUES_001("QUES-001", "Entered question uuid does not exist");
+
 
     private static final Map<String, GenericErrorCode> LOOKUP = new HashMap<String, GenericErrorCode>();
 
@@ -28,7 +30,7 @@ public enum GenericErrorCode implements ErrorCode {
 
     private final String defaultMessage;
 
-    private GenericErrorCode(final String code, final String defaultMessage) {
+    GenericErrorCode(final String code, final String defaultMessage) {
         this.code = code;
         this.defaultMessage = defaultMessage;
     }

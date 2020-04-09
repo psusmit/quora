@@ -44,7 +44,7 @@ public class UserBusinessService {
         if (userAuthTokenEntity == null)
             throw new AuthorizationFailedException(GenericErrorCode.ATHR_001.getCode(), GenericErrorCode.ATHR_001.getDefaultMessage());
         if (null != userAuthTokenEntity.getLogoutAt() && userAuthTokenEntity.getLogoutAt().compareTo(ZonedDateTime.now()) < 0)
-            throw new AuthorizationFailedException(GenericErrorCode.ATHR_003.getCode(), GenericErrorCode.ATHR_002.getDefaultMessage());
+            throw new AuthorizationFailedException(GenericErrorCode.ATHR_002.getCode(), GenericErrorCode.ATHR_002.getDefaultMessage());
         return userAuthTokenEntity;
     }
 }
