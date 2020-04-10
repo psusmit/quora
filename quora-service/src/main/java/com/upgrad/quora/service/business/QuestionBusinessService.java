@@ -28,16 +28,27 @@ public class QuestionBusinessService {
 
     @Autowired
     private UserAuthTokenDao userAuthTokenDao;
-
+    @Transactional(propagation = Propagation.REQUIRED)
     public QuestionEntity create(QuestionEntity questionEntity, String authorizationToken) throws AuthorizationFailedException {
         UserAuthTokenEntity userAuthTokenEntity = userAuthTokenDao.getUserAuthByToken(authorizationToken);
         if (userAuthTokenEntity == null)
             throw new AuthorizationFailedException(GenericErrorCode.ATHR_001.getCode(), GenericErrorCode.ATHR_001.getDefaultMessage());
         if (null != userAuthTokenEntity.getLogoutAt() && userAuthTokenEntity.getLogoutAt().compareTo(ZonedDateTime.now()) < 0)
             throw new AuthorizationFailedException(GenericErrorCode.ATHR_002.getCode(), "User is signed out.Sign in first to post a question");
+       // questionEntity.setUuid(UUID.randomUUID().toString());
+
+        //questionDAO.create(questionEntity);
+        //return questionEntity;
+
+        questionEntity.setDate(ZonedDateTime.now());
         questionEntity.setUuid(UUID.randomUUID().toString());
+        questionEntity.setUserEntity(userAuthTokenEntity.getUserEntity());
+        //return questionDAO.create(questionEntity);
         questionDAO.create(questionEntity);
         return questionEntity;
+
+
+
     }
 
     public List<QuestionEntity> getAllQuestions(String authorizationToken) throws AuthorizationFailedException {
