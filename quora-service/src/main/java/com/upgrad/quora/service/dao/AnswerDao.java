@@ -55,4 +55,20 @@ public class AnswerDao {
             return null;
         }
     }
+
+    public AnswerEntity deleteAnswer(final String answerId) {
+        try {
+            AnswerEntity answerEntity =  entityManager
+                    .createNamedQuery("getAnswerByUUID", AnswerEntity.class)
+                    .setParameter("answerId", answerId)
+                    .getSingleResult();
+
+            entityManager.remove(answerEntity);
+
+            return answerEntity;
+
+        } catch (NoResultException nre) {
+            return null;
+        }
+    }
 }

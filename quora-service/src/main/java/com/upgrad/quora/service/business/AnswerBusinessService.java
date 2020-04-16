@@ -69,12 +69,24 @@ public class AnswerBusinessService {
             throw new AnswerNotFoundException("ANS-001", "Entered answer uuid does not exist");
 
         answerEntity.setAnswer(answer);
-
         answerEntity = answerDao.saveOrUpdateAnswer(answerEntity);
 
         return answerEntity;
 
     }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public AnswerEntity deleteAnswer(String answerId, String authorizationToken) throws AuthorizationFailedException, AnswerNotFoundException {
+        tokenValidation(authorizationToken);
+
+        AnswerEntity answerEntity = answerDao.deleteAnswer(answerId);
+        if(answerEntity == null)
+            throw new AnswerNotFoundException("ANS-001", "Entered answer uuid does not exist");
+
+        return answerEntity;
+
+    }
+
 
     private UserAuthTokenEntity tokenValidation(String authorizationToken) throws AuthorizationFailedException {
         UserAuthTokenEntity userAuthTokenEntity = userDao.getUserAuthToken(authorizationToken);
