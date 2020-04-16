@@ -35,15 +35,23 @@ public class RestExceptionHandler {
     }
 
     @ExceptionHandler(SignUpRestrictedException.class)
-    public ResponseEntity<com.upgrad.quora.api.model.ErrorResponse> signUpRestrictedException(SignUpRestrictedException exe, WebRequest request) {
-        return new ResponseEntity<com.upgrad.quora.api.model.ErrorResponse>(
-                new com.upgrad.quora.api.model.ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()), HttpStatus.CONFLICT
+    public ResponseEntity<ErrorResponse> signUpRestrictedException(SignUpRestrictedException exe, WebRequest request) {
+        return new ResponseEntity<ErrorResponse>(
+                new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()), HttpStatus.CONFLICT
         );
     }
 
+    @ExceptionHandler(InvalidQuestionException.class)
+    public ResponseEntity<ErrorResponse> invalidQuestionException(InvalidQuestionException exe, WebRequest request) {
+        return new ResponseEntity<>(
+                new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()), HttpStatus.NOT_FOUND
+        );
+    }
+
+
     @ExceptionHandler(SignOutRestrictedException.class)
     public ResponseEntity<com.upgrad.quora.api.model.ErrorResponse> signOutRestrictedException(SignOutRestrictedException exe, WebRequest request) {
-        return new ResponseEntity<com.upgrad.quora.api.model.ErrorResponse>(
+        return new ResponseEntity<ErrorResponse>(
                 new com.upgrad.quora.api.model.ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()), HttpStatus.UNAUTHORIZED
         );
     }
