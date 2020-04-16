@@ -36,7 +36,7 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(SignUpRestrictedException.class)
     public ResponseEntity<ErrorResponse> signUpRestrictedException(SignUpRestrictedException exe, WebRequest request) {
-        return new ResponseEntity<ErrorResponse>(
+        return new ResponseEntity<>(
                 new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()), HttpStatus.CONFLICT
         );
     }
@@ -50,15 +50,15 @@ public class RestExceptionHandler {
 
 
     @ExceptionHandler(SignOutRestrictedException.class)
-    public ResponseEntity<com.upgrad.quora.api.model.ErrorResponse> signOutRestrictedException(SignOutRestrictedException exe, WebRequest request) {
-        return new ResponseEntity<ErrorResponse>(
-                new com.upgrad.quora.api.model.ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()), HttpStatus.UNAUTHORIZED
+    public ResponseEntity<ErrorResponse> signOutRestrictedException(SignOutRestrictedException exe, WebRequest request) {
+        return new ResponseEntity<>(
+                new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()), HttpStatus.UNAUTHORIZED
         );
     }
 
     @ExceptionHandler(AnswerNotFoundException.class)
-    public ResponseEntity<com.upgrad.quora.api.model.ErrorResponse> answerNotFoundException(AnswerNotFoundException exe, WebRequest request) {
-        return new ResponseEntity<com.upgrad.quora.api.model.ErrorResponse>(new com.upgrad.quora.api.model.ErrorResponse().code(exe.getCode()).
+    public ResponseEntity<ErrorResponse> answerNotFoundException(AnswerNotFoundException exe, WebRequest request) {
+        return new ResponseEntity<>(new ErrorResponse().code(exe.getCode()).
                 message(exe.getErrorMessage()), HttpStatus.NOT_FOUND);
     }
 

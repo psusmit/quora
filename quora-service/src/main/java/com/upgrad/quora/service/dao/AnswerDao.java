@@ -56,13 +56,8 @@ public class AnswerDao {
         }
     }
 
-    public AnswerEntity deleteAnswer(final String answerId) {
+    public AnswerEntity deleteAnswer(final AnswerEntity answerEntity) {
         try {
-            AnswerEntity answerEntity =  entityManager
-                    .createNamedQuery("getAnswerByUUID", AnswerEntity.class)
-                    .setParameter("answerId", answerId)
-                    .getSingleResult();
-
             entityManager.remove(answerEntity);
 
             return answerEntity;

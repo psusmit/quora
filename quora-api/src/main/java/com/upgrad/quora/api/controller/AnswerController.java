@@ -1,16 +1,12 @@
 package com.upgrad.quora.api.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.upgrad.quora.api.model.AnswerRequest;
 import com.upgrad.quora.api.model.AnswerResponse;
-import com.upgrad.quora.api.model.SignoutResponse;
 import com.upgrad.quora.service.business.AnswerBusinessService;
-import com.upgrad.quora.service.business.UserBusinessService;
 import com.upgrad.quora.service.entity.AnswerEntity;
 import com.upgrad.quora.service.exception.AnswerNotFoundException;
 import com.upgrad.quora.service.exception.AuthorizationFailedException;
 import com.upgrad.quora.service.exception.InvalidQuestionException;
-import com.upgrad.quora.service.exception.UserNotFoundException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +15,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Field;
-import java.time.ZonedDateTime;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 @RestController
 //@RequestMapping("/answer")
@@ -67,7 +64,7 @@ public class AnswerController {
         AnswerEntity answerEntity = answerBusinessService.createAnswerForQuestion(questionId, answerRequest.getAnswer(), authorization);
 
         AnswerResponse answerResponse = new AnswerResponse().id(answerEntity.getUuid()).status("ANSWER CREATED");
-        return new ResponseEntity<AnswerResponse>(answerResponse, HttpStatus.OK);
+        return new ResponseEntity<>(answerResponse, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = "/answer/edit/{answerId}",
@@ -79,7 +76,7 @@ public class AnswerController {
         AnswerEntity answerEntity = answerBusinessService.updateAnswer(answerId, answerRequest.getAnswer(), authorization);
 
         AnswerResponse answerResponse = new AnswerResponse().id(answerEntity.getUuid()).status("ANSWER EDITED");
-        return new ResponseEntity<AnswerResponse>(answerResponse, HttpStatus.OK);
+        return new ResponseEntity<>(answerResponse, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, path = "/answer/delete/{answerId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -90,6 +87,6 @@ public class AnswerController {
         AnswerEntity answerEntity = answerBusinessService.deleteAnswer(answerId, authorization);
 
         AnswerResponse answerResponse = new AnswerResponse().id(answerEntity.getUuid()).status("ANSWER DELETED");
-        return new ResponseEntity<AnswerResponse>(answerResponse, HttpStatus.OK);
+        return new ResponseEntity<>(answerResponse, HttpStatus.OK);
     }
 }
