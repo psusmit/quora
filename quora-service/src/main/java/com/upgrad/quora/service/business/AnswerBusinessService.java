@@ -47,7 +47,7 @@ public class AnswerBusinessService {
 
         QuestionEntity questionEntity = questionDAO.getQuestionById(questionId);
         if(questionEntity == null)
-            throw new InvalidQuestionException("QUES-001", "The question with entered uuid whose details are to be seen does not exist");
+            throw new InvalidQuestionException(GenericErrorCode.QUES_001.getCode(), GenericErrorCode.QUES_001.getDefaultMessage());
 
         AnswerEntity answerEntity = new AnswerEntity();
         answerEntity.setUuid(UUID.randomUUID().toString());
@@ -66,7 +66,7 @@ public class AnswerBusinessService {
 
         AnswerEntity answerEntity = answerDao.getAnswerByUUID(answerId);
         if(answerEntity == null)
-            throw new AnswerNotFoundException("ANS-001", "Entered answer uuid does not exist");
+            throw new AnswerNotFoundException(GenericErrorCode.ANS_001.getCode(), GenericErrorCode.ANS_001.getDefaultMessage());
 
         answerEntity.setAnswer(answer);
         answerEntity = answerDao.saveOrUpdateAnswer(answerEntity);
@@ -81,7 +81,7 @@ public class AnswerBusinessService {
 
         AnswerEntity answerEntity = answerDao.deleteAnswer(answerId);
         if(answerEntity == null)
-            throw new AnswerNotFoundException("ANS-001", "Entered answer uuid does not exist");
+            throw new AnswerNotFoundException(GenericErrorCode.ANS_001.getCode(), GenericErrorCode.ANS_001.getDefaultMessage());
 
         return answerEntity;
 
