@@ -57,7 +57,7 @@ public class RestExceptionHandler {
     @ExceptionHandler(AnswerNotFoundException.class)
     public ResponseEntity<com.upgrad.quora.api.model.ErrorResponse> answerNotFoundException(AnswerNotFoundException exe, WebRequest request) {
         return new ResponseEntity<com.upgrad.quora.api.model.ErrorResponse>(new com.upgrad.quora.api.model.ErrorResponse().code(exe.getCode()).
-                message(exe.getErrorMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+                message(exe.getErrorMessage()), HttpStatus.NOT_FOUND);
     }
 
 }
