@@ -16,7 +16,7 @@ public class AnswerDao {
     public List<AnswerEntity> getAllAnswersForQuestion(final String questionId) {
         try {
             return entityManager
-                    .createNamedQuery("answersByQuestionId", AnswerEntity.class)
+                    .createNamedQuery("answersByQuestionUUID", AnswerEntity.class)
                     .setParameter("questionId", questionId)
                     .getResultList();
         } catch (NoResultException nre) {
@@ -24,4 +24,35 @@ public class AnswerDao {
         }
     }
 
+    public AnswerEntity createAnswer(final AnswerEntity answerEntity) {
+        try {
+            entityManager.persist(answerEntity);
+            return answerEntity;
+        } catch (NoResultException nre) {
+            return null;
+        }
+
+
+    }
+
+    public AnswerEntity getAnswerByUUID(final String answerId) {
+        try {
+            return entityManager
+                    .createNamedQuery("getAnswerByUUID", AnswerEntity.class)
+                    .setParameter("answerId", answerId)
+                    .getSingleResult();
+
+        } catch (NoResultException nre) {
+            return null;
+        }
+    }
+
+    public AnswerEntity saveOrUpdateAnswer(final AnswerEntity answerEntity) {
+        try {
+            return entityManager.merge(answerEntity);
+
+        } catch (NoResultException nre) {
+            return null;
+        }
+    }
 }

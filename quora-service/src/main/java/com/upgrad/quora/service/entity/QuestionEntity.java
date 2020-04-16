@@ -10,7 +10,10 @@ import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "question")
+@NamedQueries({
+        @NamedQuery(name = "getQuestionByUUID", query = "select q from QuestionEntity q where q.uuid=:questionId")
 
+})
 public class QuestionEntity {
     @Id
     @Column(name = "id")
@@ -29,6 +32,11 @@ public class QuestionEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
+
+
+    @Column(name = "date")
+    @NotNull
+    private ZonedDateTime date;
 
     public Integer getId() {
         return id;
@@ -69,9 +77,5 @@ public class QuestionEntity {
     public void setDate(ZonedDateTime date) {
         this.date = date;
     }
-
-    @Column(name = "date")
-    @NotNull
-    private ZonedDateTime date;
 
 }

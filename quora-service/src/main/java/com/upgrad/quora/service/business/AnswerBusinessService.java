@@ -2,14 +2,14 @@ package com.upgrad.quora.service.business;
 
 import com.upgrad.quora.service.common.GenericErrorCode;
 import com.upgrad.quora.service.dao.AnswerDao;
+import com.upgrad.quora.service.dao.QuestionDAO;
 import com.upgrad.quora.service.dao.UserDao;
 import com.upgrad.quora.service.entity.AnswerEntity;
+import com.upgrad.quora.service.entity.QuestionEntity;
 import com.upgrad.quora.service.entity.UserAuthTokenEntity;
-import com.upgrad.quora.service.entity.UserEntity;
 import com.upgrad.quora.service.exception.AnswerNotFoundException;
 import com.upgrad.quora.service.exception.AuthorizationFailedException;
 import com.upgrad.quora.service.exception.InvalidQuestionException;
-import com.upgrad.quora.service.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class AnswerBusinessService {
@@ -27,12 +28,52 @@ public class AnswerBusinessService {
     @Autowired
     AnswerDao answerDao;
 
+    @Autowired
+    QuestionDAO questionDAO;
+
     public List<AnswerEntity> getAllAnswersToQuestionById(String questionId, String authorizationToken) throws AuthorizationFailedException, InvalidQuestionException {
         tokenValidation(authorizationToken);
         List<AnswerEntity> answers = answerDao.getAllAnswersForQuestion(questionId);
         if (null == answers || answers.size()==0)
             throw new InvalidQuestionException("QUES-001", "The question with entered uuid whose details are to be seen does not exist");
         else return answers;
+    }
+
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public AnswerEntity createAnswerForQuestion(String questionId, String answer, String authorizationToken) throws AuthorizationFailedException,InvalidQuestionException{
+
+        UserAuthTokenEntity userAuthTokenEntity = tokenValidation(authorizationToken);
+
+        QuestionEntity questionEntity = questionDAO.getQuestionById(questionId);
+        if(questionEntity == null)
+            throw new InvalidQuestionException("QUES-001", "The question with entered uuid whose details are to be seen does not exist");
+
+        AnswerEntity answerEntity = new AnswerEntity();
+        answerEntity.setUuid(UUID.randomUUID().toString());
+        answerEntity.setDate(ZonedDateTime.now());
+        answerEntity.setAnswer(answer);
+        answerEntity.setQuestionEntity(questionEntity);
+        answerEntity.setUserEntity(userAuthTokenEntity.getUserEntity());
+        answerEntity = answerDao.createAnswer(answerEntity);
+        return answerEntity;
+
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public AnswerEntity updateAnswer(String answerId, String answer, String authorizationToken) throws AuthorizationFailedException, AnswerNotFoundException {
+        tokenValidation(authorizationToken);
+
+        AnswerEntity answerEntity = answerDao.getAnswerByUUID(answerId);
+        if(answerEntity == null)
+            throw new AnswerNotFoundException("ANS-001", "Entered answer uuid does not exist");
+
+        answerEntity.setAnswer(answer);
+
+        answerEntity = answerDao.saveOrUpdateAnswer(answerEntity);
+
+        return answerEntity;
+
     }
 
     private UserAuthTokenEntity tokenValidation(String authorizationToken) throws AuthorizationFailedException {
@@ -43,4 +84,12 @@ public class AnswerBusinessService {
             throw new AuthorizationFailedException(GenericErrorCode.ATHR_003.getCode(), GenericErrorCode.ATHR_002.getDefaultMessage());
         return userAuthTokenEntity;
     }
+
+
+
+
+
+
+
+
 }

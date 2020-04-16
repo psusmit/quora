@@ -16,7 +16,9 @@ import java.time.ZonedDateTime;
 @Entity
 @Table(name = "answer")
 @NamedQueries({
-        @NamedQuery(name = "answersByQuestionId", query = "select a from AnswerEntity a where a.questionEntity.uuid=:questionId")
+        @NamedQuery(name = "answersByQuestionUUID", query = "select a from AnswerEntity a where a.questionEntity.uuid=:questionId"),
+        @NamedQuery(name = "getAnswerByUUID", query = "select a from AnswerEntity a where a.uuid=:answerId")
+
 
 })
 public class AnswerEntity implements Serializable {
@@ -33,7 +35,7 @@ public class AnswerEntity implements Serializable {
 
     @Column(name = "ans")
     @NotNull
-    @Size(max = 30)
+    @Size(max = 500)
     private String answer;
 
     @Column(name = "date")
@@ -43,10 +45,9 @@ public class AnswerEntity implements Serializable {
     @NotNull
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "user_id")
-
     private UserEntity userEntity;
 
-    @ManyToOne()
+    @ManyToOne
     @NotNull
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "question_id")
@@ -100,15 +101,5 @@ public class AnswerEntity implements Serializable {
         this.questionEntity = questionEntity;
     }
 
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.NO_CLASS_NAME_STYLE)
-                .append("id", id)
-                .append("uuid", uuid)
-                .append("answer", answer)
-                .append("question", questionEntity.getContent())
-                .toString();
-    }
 
 }
