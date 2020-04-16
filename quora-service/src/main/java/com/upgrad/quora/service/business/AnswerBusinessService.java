@@ -35,7 +35,7 @@ public class AnswerBusinessService {
         tokenValidation(authorizationToken);
         List<AnswerEntity> answers = answerDao.getAllAnswersForQuestion(questionId);
         if (null == answers || answers.size()==0)
-            throw new InvalidQuestionException("QUES-001", "The question with entered uuid whose details are to be seen does not exist");
+            throw new InvalidQuestionException(GenericErrorCode.QUES_001.getCode(), GenericErrorCode.QUES_001.getDefaultMessage());
         else return answers;
     }
 

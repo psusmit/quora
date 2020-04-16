@@ -56,12 +56,6 @@ public class RestExceptionHandler {
         );
     }
 
-    @ExceptionHandler(InvalidQuestionException.class)
-    public ResponseEntity<com.upgrad.quora.api.model.ErrorResponse> invalidQuestioException(InvalidQuestionException exe, WebRequest request) {
-        return new ResponseEntity<com.upgrad.quora.api.model.ErrorResponse>(new com.upgrad.quora.api.model.ErrorResponse().code(exe.getCode()).
-                message(exe.getErrorMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
     @ExceptionHandler(AnswerNotFoundException.class)
     public ResponseEntity<com.upgrad.quora.api.model.ErrorResponse> answerNotFoundException(AnswerNotFoundException exe, WebRequest request) {
         return new ResponseEntity<com.upgrad.quora.api.model.ErrorResponse>(new com.upgrad.quora.api.model.ErrorResponse().code(exe.getCode()).
