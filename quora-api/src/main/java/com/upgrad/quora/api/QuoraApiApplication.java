@@ -16,4 +16,3 @@ public class QuoraApiApplication {
         SpringApplication.run(QuoraApiApplication.class, args);
     }
 }
-

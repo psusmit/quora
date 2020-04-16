@@ -33,6 +33,7 @@ public class RestExceptionHandler {
                 new ErrorResponse().code(exc.getCode()).message(exc.getErrorMessage()), HttpStatus.NOT_FOUND
         );
     }
+
     @ExceptionHandler(SignUpRestrictedException.class)
     public ResponseEntity<com.upgrad.quora.api.model.ErrorResponse> signUpRestrictedException(SignUpRestrictedException exe, WebRequest request) {
         return new ResponseEntity<com.upgrad.quora.api.model.ErrorResponse>(
@@ -47,5 +48,10 @@ public class RestExceptionHandler {
         );
     }
 
+    @ExceptionHandler(InvalidQuestionException.class)
+    public ResponseEntity<com.upgrad.quora.api.model.ErrorResponse> invalidQuestioException(InvalidQuestionException exe, WebRequest request) {
+        return new ResponseEntity<com.upgrad.quora.api.model.ErrorResponse>(new com.upgrad.quora.api.model.ErrorResponse().code(exe.getCode()).
+                message(exe.getErrorMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
 }
