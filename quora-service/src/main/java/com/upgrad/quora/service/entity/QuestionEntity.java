@@ -9,10 +9,10 @@ import javax.validation.constraints.Size;
 import java.time.ZonedDateTime;
 
 @Entity
-@Table(name = "QUESTION")
+@Table(name = "question")
 @NamedQueries({
         @NamedQuery(name = "getAllQuestions", query = "select q from QuestionEntity q"),
-        @NamedQuery(name = "getQuestionsByUUID", query = "select q from QuestionEntity q where q.uuid=:questionId"),
+        @NamedQuery(name = "getQuestionByUUID", query = "select q from QuestionEntity q where q.uuid=:questionId"),
         @NamedQuery(
                 name = "getQuestionByUId",
                 query = "select q from QuestionEntity q where q.uuid=:uuid"),
@@ -22,24 +22,24 @@ import java.time.ZonedDateTime;
 })
 public class QuestionEntity {
     @Id
-    @Column(name = "ID")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "UUID")
+    @Column(name = "uuid")
     @Size(max = 200)
     private String uuid;
 
-    @Column(name = "CONTENT")
+    @Column(name = "content")
     @Size(max = 500)
     private String content;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "USER_ID")
+    @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
-    @Column(name = "DATE")
+    @Column(name = "date")
     @NotNull
     private ZonedDateTime date;
 

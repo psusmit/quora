@@ -24,7 +24,8 @@ public class QuestionDAO {
 
     public QuestionEntity getQuestionById(String questionId) {
         try {
-            return entityManager.createNamedQuery("getQuestionsByUUID", QuestionEntity.class).setParameter("questionId", questionId).getSingleResult();
+            return entityManager.createNamedQuery("getQuestionByUUID", QuestionEntity.class)
+                    .setParameter("questionId", questionId).getSingleResult();
         } catch (NoResultException nre) {
             return null;
         }
