@@ -15,7 +15,8 @@ public enum GenericErrorCode implements ErrorCode {
     ATHR_002("ATHR-002", "User is signed out.Sign in first to get user details"),
     ATHR_003("ATHR-003", "Unauthorized Access, Entered user is not an admin"),
     USR_001("USR-001", "User with entered uuid does not exist"),
-    QUES_001("QUES-001", "Entered question uuid does not exist");
+    QUES_001("QUES-001", "Entered question uuid does not exist"),
+    ANS_001("ANS-001", "Entered answer uuid does not exist");
 
 
     private static final Map<String, GenericErrorCode> LOOKUP = new HashMap<String, GenericErrorCode>();

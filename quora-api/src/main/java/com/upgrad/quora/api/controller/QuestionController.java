@@ -64,7 +64,7 @@ public class QuestionController {
         QuestionDeleteResponse questionDeleteResponse = new QuestionDeleteResponse();
         questionDeleteResponse.setId(questionEntity.getUuid());
         questionDeleteResponse.setStatus("QUESTION DELETED");
-        return new ResponseEntity<QuestionDeleteResponse>(questionDeleteResponse, HttpStatus.OK);
+        return new ResponseEntity<>(questionDeleteResponse, HttpStatus.OK);
     }
 
     @RequestMapping(
@@ -84,8 +84,7 @@ public class QuestionController {
             questionDetailResponse.setContent(questionEntity.getContent());
             questionDetailResponses.add(questionDetailResponse);
         }
-        return new ResponseEntity<List<QuestionDetailsResponse>>(
-                questionDetailResponses, HttpStatus.OK);
+        return new ResponseEntity<>(questionDetailResponses, HttpStatus.OK);
     }
 
 

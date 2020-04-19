@@ -36,7 +36,7 @@ public class UserBusinessService {
         String userIdResponse = userDao.deleteUserByUserId(userId);
         if (null == userIdResponse)
             throw new UserNotFoundException(GenericErrorCode.USR_001.getCode(), GenericErrorCode.USR_001.getDefaultMessage());
-        else return userIdResponse;
+        else return "USER SUCCESSFULLY DELETED";
     }
 
     private UserAuthTokenEntity tokenValidation(String authorizationToken) throws AuthorizationFailedException {
