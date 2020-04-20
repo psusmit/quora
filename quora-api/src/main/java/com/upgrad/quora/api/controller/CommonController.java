@@ -16,6 +16,12 @@ public class CommonController {
     @Autowired
     UserBusinessService userBusinessService;
 
+    /*
+     * This endpoint is used to get the details of any user in the Quora Application.
+     *  Request the path variable 'userId'and and access token of the signed in user.
+     * Throws AuthorizationFailedException, UserNotFoundException.
+     * Return all the details of the user from the database.
+     */
     @GetMapping(path = "/{userId}")
     public ResponseEntity<UserDetailsResponse> getUserById(@PathVariable("userId") String userId, @RequestHeader("authorization") final String authorization) throws AuthorizationFailedException, UserNotFoundException {
         UserEntity userEntity = userBusinessService.getUserById(userId, authorization);

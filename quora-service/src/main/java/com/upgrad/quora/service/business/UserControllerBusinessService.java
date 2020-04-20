@@ -26,6 +26,10 @@ public class UserControllerBusinessService {
     @Autowired
     private PasswordCryptographyProvider cryptographyProvider;
 
+    /*
+    *This method is foe user registration.
+    *Throws SignUpRestrictedException.
+     */
     @Transactional(propagation = Propagation.REQUIRED)
     public UserEntity signup(UserEntity userEntity) throws SignUpRestrictedException {
 
@@ -45,6 +49,11 @@ public class UserControllerBusinessService {
         return userDao.createUser(userEntity);
     }
 
+    /*
+     * This method is used for the user to signin.
+     * Return UserAuthEntity which contains the access-token and other details.
+     * Throws AuthenticationFailedException
+     */
     @Transactional(propagation = Propagation.REQUIRED)
     public UserAuthTokenEntity signin(final String username, final String password) throws AuthenticationFailedException {
 
@@ -74,6 +83,11 @@ public class UserControllerBusinessService {
         return userAuthTokenEntity;
     }
 
+    /*
+     * This method is used by user to signout.
+     * Throw SignOutRestrictedException.
+     *Return UserEntity details of the signed out user.
+     */
     @Transactional(propagation = Propagation.REQUIRED)
     public UserEntity signout(final String accessToken) throws SignOutRestrictedException {
         UserAuthTokenEntity userAuthEntity = userAuthTokenDao.getUserAuthByToken(accessToken);

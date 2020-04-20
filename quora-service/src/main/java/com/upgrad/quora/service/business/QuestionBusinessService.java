@@ -30,6 +30,10 @@ public class QuestionBusinessService {
     @Autowired
     private UserAuthTokenDao userAuthTokenDao;
 
+    /*
+     *Creates question in the DB if the accessToken is valid.
+     *Throws AuthorizationFailedException.
+     */
     @Transactional(propagation = Propagation.REQUIRED)
     public QuestionEntity create(QuestionEntity questionEntity, String authorizationToken) throws AuthorizationFailedException {
         UserAuthTokenEntity userAuthTokenEntity = userAuthTokenDao.getUserAuthByToken(authorizationToken);
@@ -45,6 +49,10 @@ public class QuestionBusinessService {
         return questionEntity;
     }
 
+    /*
+     * Gets all the questions in the DB.
+     * Throws AuthorizationFailedException.
+     */
     public List<QuestionEntity> getAllQuestions(String authorizationToken) throws AuthorizationFailedException {
         UserAuthTokenEntity userAuthTokenEntity = userAuthTokenDao.getUserAuthByToken(authorizationToken);
         if (userAuthTokenEntity == null)
@@ -55,6 +63,10 @@ public class QuestionBusinessService {
 
     }
 
+    /*
+     *Edit the question.
+     *Throws AuthorizationFailedException, InvalidQuestionException.
+     */
     @Transactional(propagation = Propagation.REQUIRED)
     public QuestionEntity editQuestionContent(QuestionEntity questionEntity, String authorizationToken) throws AuthorizationFailedException, InvalidQuestionException {
         UserAuthTokenEntity userAuthTokenEntity = userAuthTokenDao.getUserAuthByToken(authorizationToken);
@@ -74,7 +86,10 @@ public class QuestionBusinessService {
         return questionById;
     }
 
-
+    /*
+     * Delete the question.
+     * Throws AuthorizationFailedException, InvalidQuestionException.
+     */
     @Transactional(propagation = Propagation.REQUIRED)
     public QuestionEntity deleteQuestion(final String accessToken, final String questionId)
             throws AuthorizationFailedException, InvalidQuestionException {
@@ -99,6 +114,10 @@ public class QuestionBusinessService {
         return questionEntity;
     }
 
+    /*
+     * Gets all the questions posted by a specific user.
+     * Throws AuthorizationFailedException, UserNotFoundException.
+     */
     public List<QuestionEntity> getAllQuestionsByUser(final String userId, final String accessToken)
             throws AuthorizationFailedException, UserNotFoundException {
         UserAuthTokenEntity userAuthEntity = userAuthTokenDao.getUserAuthByToken(accessToken);

@@ -27,7 +27,12 @@ public class AnswerController {
     @Autowired
     AnswerBusinessService answerBusinessService;
 
-    //get List of answers for given QuestionId
+    /*
+     *This method is used to get all answers to a particular question.
+     * Requests the path variable 'questionId'  and access token of the signed in user.
+     * Throws AuthorizationFailedException, InvalidQuestionException.
+     * return "uuid" of the answer, "content" of the question and "content" of all the answers posted for that particular question
+     */
     @GetMapping(path = "/answer/all/{questionId}")
     public ResponseEntity<String> getAllAnswersToQuestion(@PathVariable("questionId") String userId,
                                                           @RequestHeader("authorization") final String authorization)
@@ -53,7 +58,12 @@ public class AnswerController {
         return new ResponseEntity<>(jsonArray.toString(), HttpStatus.OK);
     }
 
-    //edit answer for given answerId
+  /*
+  *This endpoint is used to edit an answer.
+  * Requests for all the attributes in "AnswerEditRequest", the path variable 'answerId' and access token of the signed in user.
+  * Throws AuthorizationFailedException, AnswerNotFoundException.
+  * Return "uuid" of the edited answer.
+   */
     @RequestMapping(method = RequestMethod.PUT, path = "/answer/edit/{answerId}",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<AnswerResponse> updateAnswer(@PathVariable("answerId") String answerId,
@@ -65,8 +75,13 @@ public class AnswerController {
         AnswerResponse answerResponse = new AnswerResponse().id(answerEntity.getUuid()).status("ANSWER EDITED");
         return new ResponseEntity<>(answerResponse, HttpStatus.OK);
     }
+    /*
+     *This method is used to delete an answer.
+     * Requests for the path variable 'answerId' and access token of the signed in.
+     * Throws AuthorizationFailedException, AnswerNotFoundException.
+     * Return "uuid" of the deleted answer
+     */
 
-    //delete answer if given answerId is present
     @RequestMapping(method = RequestMethod.DELETE, path = "/answer/delete/{answerId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<AnswerResponse> deleteAnswer(@PathVariable("answerId") String answerId,
                                                        @RequestHeader("authorization") final String authorization)
@@ -78,6 +93,12 @@ public class AnswerController {
         return new ResponseEntity<>(answerResponse, HttpStatus.OK);
     }
 
+    /*
+     *This method is to create an answer to a particular question.
+     * Requests for the attribute in "Answer Request", the path variable 'questionId ' and access token of the signed in user.
+     *Throws AuthorizationFailedException, InvalidQuestionException.
+     *  Return the "uuid" of the answer.
+     */
     @RequestMapping(method = RequestMethod.POST, path = "/question/{questionId}/answer/create",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<AnswerResponse> createAnswerForQuestion(@PathVariable("questionId") String questionId,

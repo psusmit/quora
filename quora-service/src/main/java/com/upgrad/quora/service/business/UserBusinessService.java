@@ -19,6 +19,10 @@ public class UserBusinessService {
     @Autowired
     UserDao userDao;
 
+    /*
+     *This methods gets the user details based on the userId passed.
+     *Throws AuthorizationFailedException, UserNotFoundException.
+     */
     public UserEntity getUserById(String userId, String authorizationToken) throws AuthorizationFailedException, UserNotFoundException {
         tokenValidation(authorizationToken);
         UserEntity user = userDao.getUserByUserId(userId);
@@ -27,6 +31,10 @@ public class UserBusinessService {
         else return user;
     }
 
+    /*
+     *This methods deletes the user details based on the userId passed.
+     *Throw AuthorizationFailedException
+     */
     @Transactional(propagation = Propagation.REQUIRED)
     public String deleteUserById(String userId, String authorizationToken) throws AuthorizationFailedException, UserNotFoundException {
         UserAuthTokenEntity userAuthTokenEntity = tokenValidation(authorizationToken);
@@ -39,6 +47,10 @@ public class UserBusinessService {
         else return "USER SUCCESSFULLY DELETED";
     }
 
+    /*
+     *This method checks if the access token exist in the DB and it is not logged out.
+     * throws AuthorizationFailedException.
+     */
     private UserAuthTokenEntity tokenValidation(String authorizationToken) throws AuthorizationFailedException {
         UserAuthTokenEntity userAuthTokenEntity = userDao.getUserAuthToken(authorizationToken);
         if (userAuthTokenEntity == null)

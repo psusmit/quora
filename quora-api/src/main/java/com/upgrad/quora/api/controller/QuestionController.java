@@ -21,6 +21,12 @@ public class QuestionController {
     @Autowired
     private QuestionBusinessService questionBusinessService;
 
+    /*
+     * This endpoint is used to create a question in the Quora Application.
+     *Requests for all the attributes in 'QuestionRequest'access token of the signed in user.
+     *Throws AuthorizationFailedException
+     *Returns UUID of the question created in DB.
+     */
     @RequestMapping(method = RequestMethod.POST, path = "/create", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<QuestionResponse> create(final QuestionRequest questionRequest, @RequestHeader("authorization") final String authorization) throws AuthorizationFailedException {
         QuestionEntity questionEntity = new QuestionEntity();
@@ -30,6 +36,12 @@ public class QuestionController {
         return new ResponseEntity<>(questionResponse, HttpStatus.CREATED);
     }
 
+    /*
+     *This method is used to fetch all the questions that have been posted in the application by any user.
+     *  Requests for access token of the signed in user.
+     * Throws AuthorizationFailedException.
+     * Return List of QuestionDetailsResponse.
+     */
     @GetMapping(path = "/all")
     public ResponseEntity<List<QuestionDetailsResponse>> getAllQuestions(@RequestHeader("authorization") final String authorization) throws AuthorizationFailedException {
         List<QuestionEntity> questionList = questionBusinessService.getAllQuestions(authorization);
@@ -42,6 +54,11 @@ public class QuestionController {
         });
         return new ResponseEntity<>(questionResponseList, HttpStatus.OK);
     }
+    /*
+     *This endpoint is used to edit a question that has been posted by a user.
+     * Requests for all the attributes in 'QuestionEditRequest', the path variable 'questionId', access token of the signed in user.
+     * Throws AuthorizationFailedException,InvalidQuestionException.
+     */
 
     @PutMapping(path = "edit/{questionId}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<QuestionEditResponse> editQuestionContent(@PathVariable("questionId") String questionId, final QuestionEditRequest questionEditRequest, @RequestHeader("authorization") final String authorization) throws AuthorizationFailedException, InvalidQuestionException {
@@ -53,7 +70,12 @@ public class QuestionController {
         return new ResponseEntity<>(new QuestionEditResponse().id(questionContent.getUuid()).status("QUESTION EDITED"), HttpStatus.OK);
     }
 
-
+    /*
+     *This endpoint is used to delete a question that has been posted by a user.
+     *Requests for the path variable 'questionId'and  and access token of the signed in user.
+     * Throws AuthorizationFailedException,InvalidQuestionException.
+     * Return 'uuid' of the deleted question.
+     */
     @RequestMapping(method = RequestMethod.DELETE, path = "/delete/{questionId}")
     public ResponseEntity<QuestionDeleteResponse> deleteQuestion(
             @RequestHeader("authorization") final String accessToken,
@@ -67,6 +89,12 @@ public class QuestionController {
         return new ResponseEntity<>(questionDeleteResponse, HttpStatus.OK);
     }
 
+    /*
+     *This endpoint is used to fetch all the questions posed by a specific user.
+     *  Requests the path variable 'userId' and access token of the signed in user.
+     * Throws  AuthorizationFailedException, UserNotFoundException.
+     * Returns  return 'uuid' and 'content' of all the questions posted by the corresponding user.
+     */
     @RequestMapping(
             method = RequestMethod.GET,
             path = "/all/{userId}",
@@ -86,7 +114,6 @@ public class QuestionController {
         }
         return new ResponseEntity<>(questionDetailResponses, HttpStatus.OK);
     }
-
 
 
 }

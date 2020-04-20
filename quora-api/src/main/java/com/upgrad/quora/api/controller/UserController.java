@@ -30,6 +30,11 @@ public class UserController {
     @Autowired
     private UserControllerBusinessService userControllerBusinessService;
 
+    /* This method is for user registration in quora application.
+     * It requests for all the attributes in 'SignupUserRequest'.
+     *It throws SignUpRestrictedException - if the username or email already exist in the database.
+     *It returns UUID of the user created.
+     */
     @RequestMapping(
             method = RequestMethod.POST,
             path = "/signup",
@@ -58,6 +63,12 @@ public class UserController {
         return new ResponseEntity<>(userResponse, HttpStatus.CREATED);
     }
 
+    /*
+     *This method is for a user to singin.
+     *It returns SigninResponse which contains user id and a access-token in the response header.
+     *It throws AuthenticationFailedException.
+     */
+
     @RequestMapping(
             method = RequestMethod.POST,
             path = "/signin",
@@ -81,6 +92,12 @@ public class UserController {
         return new ResponseEntity<>(signinResponse, headers, HttpStatus.OK);
     }
 
+    /*
+     *This method is used to sign out from the Quora Application.
+     *AccessToken Token used for authenticating the user.
+     *Returns UUID of the user who is signed out.
+     *Throws SignOutRestrictedException.
+     */
     @RequestMapping(
             method = RequestMethod.POST,
             path = "/signout",

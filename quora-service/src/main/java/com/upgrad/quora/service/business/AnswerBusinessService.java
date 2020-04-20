@@ -31,6 +31,10 @@ public class AnswerBusinessService {
     @Autowired
     private QuestionDAO questionDAO;
 
+    /*
+     * get all the answers for a question.
+     * throws AuthorizationFailedException, InvalidQuestionException.
+     */
 
     public List<AnswerEntity> getAllAnswersToQuestionById(String questionId, String authorizationToken) throws AuthorizationFailedException, InvalidQuestionException {
         validateAuthorizationToken(authorizationToken);
@@ -40,7 +44,10 @@ public class AnswerBusinessService {
         else return answers;
     }
 
-
+    /*
+     * edits the answer which already exist in the database.
+     * throws AuthorizationFailedException, AnswerNotFoundException.
+     */
     @Transactional(propagation = Propagation.REQUIRED)
     public AnswerEntity updateAnswer(String answerId, String answer, String authorizationToken) throws AuthorizationFailedException, AnswerNotFoundException {
         UserAuthTokenEntity userAuthTokenEntity = userDao.getUserAuthToken(authorizationToken);
@@ -61,6 +68,10 @@ public class AnswerBusinessService {
 
     }
 
+    /*
+     * delete the answer.
+     * throws AuthorizationFailedException, AnswerNotFoundException
+     */
     @Transactional(propagation = Propagation.REQUIRED)
     public AnswerEntity deleteAnswer(String answerId, String authorizationToken) throws AuthorizationFailedException, AnswerNotFoundException {
 
@@ -76,6 +87,10 @@ public class AnswerBusinessService {
 
     }
 
+    /*
+     * creates an answer in the database.
+     * throws AuthorizationFailedException, InvalidQuestionException.
+     */
     @Transactional(propagation = Propagation.REQUIRED)
     public AnswerEntity createAnswerForQuestion(String questionId, String answer, String authorizationToken) throws AuthorizationFailedException, InvalidQuestionException {
 
